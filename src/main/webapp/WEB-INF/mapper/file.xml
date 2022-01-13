@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="file">
+	<insert id="insertFile" parameterType="fileVO">
+		insert into uploadfile(servername, localname, BNUM)
+		values(#{serverName}, #{localName}, #{bnum})
+	</insert>
+	
+	<select id="selectFile" parameterType="fileVO" resultType="fileVO">
+		select num, localname, servername, bnum
+		from uploadfile
+		where bnum = #{bnum}
+	</select>
+	
+	<delete id="deleteFile" parameterType="fileVO">
+	  delete from uploadfile
+	  <where>
+	       <choose>
+	            <when test="num!= 0">
+	                 and num=#{num}
+	            </when>
+	            <when test="bnum !=0">       <!--bnum로 전체삭제를 줄수도 있기 때문에  -->
+	                  and bnum = #{bnum}
+	            </when>
+	       </choose>
+	  </where>
+	</delete>
+</mapper>

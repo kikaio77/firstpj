@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="member">
+	<select id="selectMember" parameterType="memberVO" resultType="memberVO">
+		select num, id, password, name, gender, email, phone
+		from member
+		where id=#{id}
+		 and password =#{password}
+		
+	<!-- 	<where>
+			<if test="id!=null">
+				and id = #{id}
+			</if>
+			<if test="password!=null">
+				and password = #{password}
+			</if>
+			id password를 둘다 받을수있게 
+			
+		</where> -->
+	</select>
+	<insert id="insertMember" parameterType="memberVO">
+		insert into member(id, password, name, gender, email, phone)
+		values(#{id}, #{password}, #{name}, #{gender}, #{email}, #{phone})
+	</insert>
+	<update id="updateMember" parameterType="memberVO">
+		update member 
+		<set>
+			<if test="password!=null">password=#{password}</if>
+			<if test="name!=null">name=#{name}</if>0
+			<if test="gender!=null">gender=#{gender}</if>
+			<if test="email!=null">email=#{email}</if>
+			<if test="phone!=null">phone=#{phone}</if>
+		</set>
+		where id=#{id}
+	</update>
+	<delete id="deleteMember" parameterType="memberVO">
+		delete from member where id=#{id}
+	</delete>
+</mapper>
+
+
